@@ -1,20 +1,10 @@
 import { FC, useContext, useEffect, useState } from 'react'
-import { useForm } from 'react-hook-form'
-import { useLocation } from 'react-router-dom'
 import { CountriesContext } from '../../context/CountriesContext'
-import { SimpleContainerModal } from '../modal/simple-container.modal'
-import { OptionStyled, SelectContainer, SelectStyled } from './styles'
+import { OptionStyled, SelectContainer, SelectStyled, TitleStyled } from './styles'
 
-type FormValues = {
-    fullName: string,
-    email: string,
-    cell: string,
-    age: number
-}
+export const WorldSelectFilter: FC<{ resetValue: boolean }> = ({ resetValue }) => {
 
-export const WorldSelectFilter: FC = () => {
-
-    const { allCountries, allContinents, allLanguages } = useContext(CountriesContext)
+    const { allCountries, allContinents, allLanguages, setFilterValue, setResetFilters } = useContext(CountriesContext)
     const [currencies, setCurrencies] = useState([])
     const [currency, setCurrency] = useState('NOTD')
     /*     const [continents, setcontinents] = useState([]) */
@@ -28,18 +18,72 @@ export const WorldSelectFilter: FC = () => {
         });
     }
 
+    const CreateFilterValue = (type: string, value: string) => {
+        setFilterValue({
+            type,
+            value
+        })
+        switch (type) {
+            case 'language':
+                setLenguage(value)
+                setCurrency('NOTD')
+                setContinent('NOTD')
+                break;
+            case 'currency':
+                setLenguage('NOTD')
+                setCurrency(value)
+                setContinent('NOTD')
+                break;
+            case 'continent':
+                setLenguage('NOTD')
+                setCurrency('NOTD')
+                setContinent(value)
+                break;
+
+            default:
+                setLenguage('NOTD')
+                setCurrency('NOTD')
+                setContinent('NOTD')
+                break;
+        }
+    }
+
     useEffect(() => {
         const CreateAllcurrenciesData = () => {
             const currenciesData = allCountries.map((country: any) => (country.currency))
             setCurrencies(deleteDuplicates(currenciesData.sort()))
         }
         CreateAllcurrenciesData()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [allCountries])
+
+    useEffect(() => {
+        if (resetValue) {
+            setLenguage('NOTD')
+            setCurrency('NOTD')
+            setContinent('NOTD')
+            setTimeout(() => {
+                setResetFilters(false)
+            }, 500);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [resetValue])
 
 
     return (
         <SelectContainer>
-            <SelectStyled value={currency} onChange={event => setCurrency(event.target.value)}>
+            <TitleStyled>
+                Busqueda especififca:
+            </TitleStyled>
+            <SelectStyled value={lenguage} onChange={event => CreateFilterValue('language', event.target.value)}>
+                <OptionStyled value={'NOTD'}>Selecciona un lenguaje</OptionStyled>
+                {allLanguages.map((language: any) => (
+                    <OptionStyled key={language.code} value={language.code}>
+                        {language.name}
+                    </OptionStyled>
+                ))}
+            </SelectStyled>
+            <SelectStyled value={currency} onChange={event => CreateFilterValue('currency', event.target.value)}>
                 <OptionStyled value={'NOTD'}>Selecciona una moneda </OptionStyled>
                 {currencies.map(country => (
                     <OptionStyled key={country} value={country}>
@@ -47,19 +91,11 @@ export const WorldSelectFilter: FC = () => {
                     </OptionStyled>
                 ))}
             </SelectStyled>
-            <SelectStyled value={continent} onChange={event => setContinent(event.target.value)}>
+            <SelectStyled value={continent} onChange={event => CreateFilterValue('continent', event.target.value)}>
                 <OptionStyled value={'NOTD'}>Selecciona un continente </OptionStyled>
                 {allContinents.map((continent: any) => (
                     <OptionStyled key={continent.code} value={continent.code}>
                         {continent.name}
-                    </OptionStyled>
-                ))}
-            </SelectStyled>
-            <SelectStyled value={lenguage} onChange={event => setLenguage(event.target.value)}>
-                <OptionStyled value={'NOTD'}>Selecciona un lenguaje</OptionStyled>
-                {allLanguages.map((language: any) => (
-                    <OptionStyled key={language.code} value={language.code}>
-                        {language.name}
                     </OptionStyled>
                 ))}
             </SelectStyled>

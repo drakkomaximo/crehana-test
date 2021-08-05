@@ -8,6 +8,11 @@ export const Main: FC = () => {
     const [allCountries, setAllCountries] = useState([])
     const [allContinents, setAllContinents] = useState([])
     const [allLanguages, setAllLanguages] = useState([])
+    const [filterValue, setFilterValue] = useState({
+        type: '',
+        value: ''
+    })
+    const [resetFilters, setResetFilters] = useState(false)
 
     return (
         <CountriesContext.Provider value={{
@@ -16,7 +21,11 @@ export const Main: FC = () => {
             allContinents,
             setAllContinents,
             allLanguages,
-            setAllLanguages
+            setAllLanguages,
+            filterValue,
+            setFilterValue,
+            resetFilters, 
+            setResetFilters
         }}>
         <BrowserRouter>
             <AppRouter/>

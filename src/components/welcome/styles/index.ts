@@ -28,5 +28,4 @@ export const WelcomeDescription = styled.p<{fontSize: string}>`
     text-align: center;
     color: white;
     font-size: ${({fontSize}): string=> fontSize};
-    padding: 1rem;
 `

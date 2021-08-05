@@ -4,7 +4,6 @@ import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
 import GlobalsStyles from './globalStyles';
 import { Main } from './main';
-/* import Menu from './components/menu/Navbar'; */
 
 
 ReactDOM.render(

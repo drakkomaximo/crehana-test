@@ -1,16 +1,18 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { NavLink, useHistory } from "react-router-dom";
-import CrehanaLogo from '../../assets/it-globers-logo.png'
+import CrehanaLogo from '../../assets/crehana-logo.png'
+import { CountriesContext } from '../../context/CountriesContext';
 
-import { Logo, Nav, StickyContainer } from './styles';
+import { ButtonStyled, InputStyled, Logo, Nav, SearchContainer, StickyContainer } from './styles';
 
 const Burger = () => {
   const history = useHistory()
+  const { setFilterValue, setResetFilters } = useContext(CountriesContext)
   const [value, setValue] = useState('')
 
-  const serachByType = (type: string) =>{
+  const serachByType = (type: string) => {
     setValue('')
-    if(value !== ''){
+    if (value !== '') {
       switch (type) {
         case 'code':
           history.push(`/search-by-code/${value}`)
@@ -18,32 +20,27 @@ const Burger = () => {
         case 'name':
           history.push(`/search-by-name/${value}`)
           break;
-      
+
         default:
           break;
       }
-    }else{
-      
     }
   }
 
   return (
     <StickyContainer>
       <Nav>
-        <NavLink to={'/'}>
-        <Logo src={CrehanaLogo} alt="Crehana logo" />
+        <NavLink to={'/'} onClick={() => { 
+            setFilterValue({ type: '', value: ''}) 
+            setResetFilters(true)
+            }}>
+          <Logo src={CrehanaLogo} alt="Crehana logo" />
         </NavLink>
-        <div style={{
-          display: 'flex',
-          flexDirection: 'row',
-          flexWrap: 'wrap',
-          justifyContent: 'flex-end',
-          paddingRight: '1rem',
-        }}>
-        <input type='text' onChange={(e)=>{setValue(e.target.value)}} value={value}/>
-        <button onClick={()=>{serachByType('name')}}>Buscar por nombre</button>
-        <button onClick={()=>{serachByType('code')}}>Buscar por código</button>
-        </div>
+        <SearchContainer>
+          <InputStyled  placeholder={'buscar....'} type='text' onChange={(e) => { setValue(e.target.value) }} value={value} />
+          <ButtonStyled onClick={() => { serachByType('name') }}>Buscar por nombre</ButtonStyled>
+          <ButtonStyled onClick={() => { serachByType('code') }}>Buscar por código</ButtonStyled>
+        </SearchContainer>
       </Nav>
     </StickyContainer>
   )
