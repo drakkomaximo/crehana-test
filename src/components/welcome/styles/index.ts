@@ -25,6 +25,7 @@ export const WelcomeTitle = styled.h1`
 `
 
 export const WelcomeDescription = styled.p<{fontSize: string}>`
+    padding: 0rem 1rem;
     text-align: center;
     color: white;
     font-size: ${({fontSize}): string=> fontSize};

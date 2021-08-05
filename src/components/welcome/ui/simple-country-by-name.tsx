@@ -1,8 +1,8 @@
 import { FC, useContext, useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
-import Flag from 'react-world-flags'
-import { WelcomeContainer, WelcomeContainerInfo, WelcomeDescription, WelcomeTitle } from '../styles'
+import { WelcomeDescription } from '../styles'
 import { CountriesContext } from '../../../context/CountriesContext'
+import { Card } from '../../card'
 
 export const SimpleCountryByName: FC = () => {
 
@@ -40,12 +40,11 @@ export const SimpleCountryByName: FC = () => {
             }}>
               {
                 countriesFilterByName.map((country: any) => (
-                  <WelcomeContainer key={country.code} onClick={() => { history.push(`/search-by-name/${country.name.toLowerCase()}`) }}>
-                    <WelcomeContainerInfo>
-                      <WelcomeTitle>{country.name}</WelcomeTitle>
-                      <Flag code={country.code} height="50" width='70' />
-                    </WelcomeContainerInfo>
-                  </WelcomeContainer>
+                  <Card
+                    key={country.code}
+                    action={() => { history.push(`/search-by-name/${country.name.toLowerCase()}`) }}
+                    country={country}
+                  />
                 ))
               }
             </div>

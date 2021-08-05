@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom'
 import Flag from 'react-world-flags'
 import { CountriesContext } from '../../context/CountriesContext'
 import { GetTrevorbladesQqlApiService } from '../../services/trevorblades-gql-api-service'
+import { HorizontalLine } from '../card/styles'
 import { WorldSelectFilter } from '../form'
 import Loading from '../loading'
 import { WelcomeContainer, WelcomeContainerInfo, WelcomeDescription, WelcomeTitle } from './styles'
@@ -62,6 +63,7 @@ export const Welcome: FC = () => {
             <br />
             <WorldSelectFilter resetValue={resetFilters}/>
             <WelcomeContainer>
+            <HorizontalLine marginLine={'0px 0px 1rem'}/>
               {filterCounrtyByType(data.countries, filterValue).map((country: any) => (
                 <WelcomeContainerInfo key={country.code} onClick={() => { history.push(`/search-by-name/${country.name.toLowerCase()}`) }}>
                   <WelcomeTitle>{country.name}</WelcomeTitle>

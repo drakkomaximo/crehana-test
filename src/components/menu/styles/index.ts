@@ -20,6 +20,10 @@ export const InputStyled = styled.input`
     border-radius: 10px;
   }
 
+  @media (max-width: 425px) {
+    width: 160px;
+  }
+
 
   @media (min-width: 613px) {
     margin-right: 1rem;
@@ -102,6 +106,14 @@ export const SearchContainer = styled.div`
   @media (min-width: 613px) {
     width: 27rem;
     flex-wrap: nowrap;
+  }
+
+  @media (min-width: 1024px) {
+    width: 40rem;
+  }
+
+  @media (min-width: 1440px) {
+    width: 52rem;
   }
 }
 `

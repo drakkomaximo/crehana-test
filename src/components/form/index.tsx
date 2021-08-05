@@ -7,9 +7,7 @@ export const WorldSelectFilter: FC<{ resetValue: boolean }> = ({ resetValue }) =
     const { allCountries, allContinents, allLanguages, setFilterValue, setResetFilters } = useContext(CountriesContext)
     const [currencies, setCurrencies] = useState([])
     const [currency, setCurrency] = useState('NOTD')
-    /*     const [continents, setcontinents] = useState([]) */
     const [continent, setContinent] = useState('NOTD')
-    /*     const [lenguages, setLenguages] = useState([]) */
     const [lenguage, setLenguage] = useState('NOTD')
 
     const deleteDuplicates = (arr: any) => {
